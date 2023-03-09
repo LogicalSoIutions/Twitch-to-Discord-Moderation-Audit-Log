@@ -51,7 +51,8 @@ def delete_message(data, webhook_url):
     dt_obj = parser.parse(data["data"]["created_at"])
     epoch_seconds = int(dt_obj.timestamp())
     embed = {
-        "description": f"`{data['data']['created_by']}` used command `/delete {msgArgs}` at your local time of: <t:{epoch_seconds}>\n\n[View usercard for {data['data']['args'][0]}](https://twitch.tv/popout/lvndmark/viewercard/{data['data']['args'][0]})",
+        "title": f"**Message Deleted** by **{data['data']['created_by']}**",
+        "description": f"Command used `/delete {msgArgs}` at your local time of: <t:{epoch_seconds}>\n\n[View usercard for {data['data']['args'][0]}](https://twitch.tv/popout/lvndmark/viewercard/{data['data']['args'][0]})",
         "color": generate_hex_code(),
     }
     payload = {"embeds": [embed]}
@@ -65,7 +66,8 @@ def timeout_message(data, webhook_url):
     dt_obj = parser.parse(data["data"]["created_at"])
     epoch_seconds = int(dt_obj.timestamp())
     embed = {
-        "description": f"`{data['data']['created_by']}` used command `/timeout {msgArgs}` at your local time of: <t:{epoch_seconds}>\n\n[View usercard for {data['data']['args'][0]}](https://twitch.tv/popout/lvndmark/viewercard/{data['data']['args'][0]})",
+        "title": f"**User Timedout** by **{data['data']['created_by']}**",
+        "description": f"Command used`/timeout {msgArgs}` at your local time of: <t:{epoch_seconds}>\n\n[View usercard for {data['data']['args'][0]}](https://twitch.tv/popout/lvndmark/viewercard/{data['data']['args'][0]})",
         "color": generate_hex_code(),
     }
     payload = {"embeds": [embed]}
@@ -79,7 +81,8 @@ def ban_message(data, webhook_url):
     dt_obj = parser.parse(data["data"]["created_at"])
     epoch_seconds = int(dt_obj.timestamp())
     embed = {
-        "description": f"`{data['data']['created_by']}` used command `/ban {msgArgs}` at your local time of: <t:{epoch_seconds}>\n\n[View usercard for {data['data']['args'][0]}](https://twitch.tv/popout/lvndmark/viewercard/{data['data']['args'][0]})",
+        "title": f"**User Banned** by **{data['data']['created_by']}**",
+        "description": f"Command used`/ban {msgArgs}` at your local time of: <t:{epoch_seconds}>\n\n[View usercard for {data['data']['args'][0]}](https://twitch.tv/popout/lvndmark/viewercard/{data['data']['args'][0]})",
         "color": generate_hex_code(),
     }
     payload = {"embeds": [embed]}
@@ -93,7 +96,8 @@ def unban_message(data, webhook_url):
     dt_obj = parser.parse(data["data"]["created_at"])
     epoch_seconds = int(dt_obj.timestamp())
     embed = {
-        "description": f"`{data['data']['created_by']}` used command `/unban {msgArgs}` at your local time of: <t:{epoch_seconds}>",
+        "title": f"**User Unbanned** by **{data['data']['created_by']}**",
+        "description": f"Command used`/unban {msgArgs}` at your local time of: <t:{epoch_seconds}>",
         "color": generate_hex_code(),
     }
     payload = {"embeds": [embed]}
@@ -107,7 +111,8 @@ def untimeout_message(data, webhook_url):
     dt_obj = parser.parse(data["data"]["created_at"])
     epoch_seconds = int(dt_obj.timestamp())
     embed = {
-        "description": f"`{data['data']['created_by']}` used command `/untimeout {msgArgs}` at your local time of: <t:{epoch_seconds}>",
+        "title": f"**Timeout Removed** by **{data['data']['created_by']}**",
+        "description": f"Command used`/untimeout {msgArgs}` at your local time of: <t:{epoch_seconds}>",
         "color": generate_hex_code(),
     }
     payload = {"embeds": [embed]}
@@ -118,7 +123,8 @@ def untimeout_message(data, webhook_url):
 
 def enable_slowmode(data, webhook_url):
     embed = {
-        "description": f"`{data['data']['created_by']}` used command `/slow {data['data']['args'][0]}` at your local time of: <t:{int(time.time())}>",
+        "title": f"**Slow Mode Enabled** by **{data['data']['created_by']}**",
+        "description": f"Command used`/slow {data['data']['args'][0]}` at your local time of: <t:{int(time.time())}>",
         "color": generate_hex_code(),
     }
     payload = {"embeds": [embed]}
@@ -129,7 +135,8 @@ def enable_slowmode(data, webhook_url):
 
 def enable_emotemode(data, webhook_url):
     embed = {
-        "description": f"`{data['data']['created_by']}` used command `/emoteonly` at your local time of: <t:{int(time.time())}>",
+        "title": f"**Emote Only Mode Enabled** by **{data['data']['created_by']}**",
+        "description": f"Command used`/emoteonly` at your local time of: <t:{int(time.time())}>",
         "color": generate_hex_code(),
     }
     print(embed)
@@ -141,7 +148,8 @@ def enable_emotemode(data, webhook_url):
 
 def enable_submode(data, webhook_url):
     embed = {
-        "description": f"`{data['data']['created_by']}` used command `/subscribers` at your local time of: <t:{int(time.time())}>",
+        "title": f"**Sub Only Mode Enabled** by **{data['data']['created_by']}**",
+        "description": f"Command used`/subscribers` at your local time of: <t:{int(time.time())}>",
         "color": generate_hex_code(),
     }
     payload = {"embeds": [embed]}
@@ -152,7 +160,8 @@ def enable_submode(data, webhook_url):
 
 def enable_followmode(data, webhook_url):
     embed = {
-        "description": f"`{data['data']['created_by']}` used command `/followers {data['data']['args'][0]}` at your local time of: <t:{int(time.time())}>",
+        "title": f"**Follower Only Mode Enabled** by **{data['data']['created_by']}**",
+        "description": f"Command used`/followers {data['data']['args'][0]}` at your local time of: <t:{int(time.time())}>",
         "color": generate_hex_code(),
     }
     payload = {"embeds": [embed]}
@@ -163,7 +172,8 @@ def enable_followmode(data, webhook_url):
 
 def enable_r9k(data, webhook_url):
     embed = {
-        "description": f"`{data['data']['created_by']}` used command `/r9kbeta` at your local time of: <t:{int(time.time())}>",
+        "title": f"**R9K Mode Enabled** by **{data['data']['created_by']}**",
+        "description": f"Command used`/r9kbeta` at your local time of: <t:{int(time.time())}>",
         "color": generate_hex_code(),
     }
     payload = {"embeds": [embed]}
@@ -174,7 +184,8 @@ def enable_r9k(data, webhook_url):
 
 def disable_slowmode(data, webhook_url):
     embed = {
-        "description": f"`{data['data']['created_by']}` used command `/slowoff` at your local time of: <t:{int(time.time())}>",
+        "title": f"**Slow Mode Disabled** by **{data['data']['created_by']}**",
+        "description": f"Command used`/slowoff` at your local time of: <t:{int(time.time())}>",
         "color": generate_hex_code(),
     }
     payload = {"embeds": [embed]}
@@ -185,7 +196,8 @@ def disable_slowmode(data, webhook_url):
 
 def disable_emotemode(data, webhook_url):
     embed = {
-        "description": f"`{data['data']['created_by']}` used command `/emoteonlyoff` at your local time of: <t:{int(time.time())}>",
+        "title": f"**Emote Only Mode Disabled** by **{data['data']['created_by']}**",
+        "description": f"Command used`/emoteonlyoff` at your local time of: <t:{int(time.time())}>",
         "color": generate_hex_code(),
     }
     payload = {"embeds": [embed]}
@@ -196,7 +208,8 @@ def disable_emotemode(data, webhook_url):
 
 def disable_submode(data, webhook_url):
     embed = {
-        "description": f"`{data['data']['created_by']}` used command `/subscribersoff` at your local time of: <t:{int(time.time())}>",
+        "title": f"**Sub Only Mode Disabled** by **{data['data']['created_by']}**",
+        "description": f"Command used`/subscribersoff` at your local time of: <t:{int(time.time())}>",
         "color": generate_hex_code(),
     }
     payload = {"embeds": [embed]}
@@ -207,7 +220,8 @@ def disable_submode(data, webhook_url):
 
 def disable_followmode(data, webhook_url):
     embed = {
-        "description": f"`{data['data']['created_by']}` used command `/followersoff` at your local time of: <t:{int(time.time())}>",
+        "title": f"**Follower Only Mode Disabled** by **{data['data']['created_by']}**",
+        "description": f"Command used`/followersoff` at your local time of: <t:{int(time.time())}>",
         "color": generate_hex_code(),
     }
     payload = {"embeds": [embed]}
@@ -218,14 +232,14 @@ def disable_followmode(data, webhook_url):
 
 def disable_r9k(data, webhook_url):
     embed = {
-        "description": f"`{data['data']['created_by']}` used command `/r9kbetaoff` at your local time of: <t:{int(time.time())}>",
+        "title": f"**R9K Mode Disabled** by **{data['data']['created_by']}**",
+        "description": f"Command used`/r9kbetaoff` at your local time of: <t:{int(time.time())}>",
         "color": generate_hex_code(),
     }
     payload = {"embeds": [embed]}
     headers = {"Content-Type": "application/json"}
     response = requests.post(webhook_url, data=json.dumps(payload), headers=headers)
     response.raise_for_status()
-
 
 # Create and start heartbeat thread
 heartbeat_thread = threading.Thread(target=send_heartbeat)
