@@ -29,10 +29,7 @@ ws.connect(endpoint)
 # Subscribe to channel point redemption topic
 subscribe_message = {
     "type": "LISTEN",
-    "data": {
-        "topics": [redemption_topic],
-        "auth_token": token
-    }
+    "data": {"topics": [redemption_topic], "auth_token": token},
 }
 ws.send(json.dumps(subscribe_message))
 
@@ -43,219 +40,189 @@ def send_heartbeat():
         print("PING")
         time.sleep(heartbeat_interval)
 
+
 def generate_hex_code():
     color = random.randint(0, 16777215)
     return color
+
 
 def delete_message(data, webhook_url):
     msgArgs = data["data"]["args"][0] + " " + data["data"]["args"][1]
     dt_obj = parser.parse(data["data"]["created_at"])
     epoch_seconds = int(dt_obj.timestamp())
     embed = {
-    'description': f"`{data['data']['created_by']}` used command `/delete {msgArgs}` at your local time of: <t:{epoch_seconds}>",
-    'color': generate_hex_code(),
+        "description": f"`{data['data']['created_by']}` used command `/delete {msgArgs}` at your local time of: <t:{epoch_seconds}>\n\n[View usercard for {data['data']['args'][0]}](https://twitch.tv/popout/lvndmark/viewercard/{data['data']['args'][0]})",
+        "color": generate_hex_code(),
     }
-    payload = {
-        'embeds': [embed]
-    }    
-    headers = {
-        "Content-Type": "application/json"
-    }
+    payload = {"embeds": [embed]}
+    headers = {"Content-Type": "application/json"}
     response = requests.post(webhook_url, data=json.dumps(payload), headers=headers)
     response.raise_for_status()
+
+
 def timeout_message(data, webhook_url):
     msgArgs = data["data"]["args"][0] + " " + data["data"]["args"][1]
     dt_obj = parser.parse(data["data"]["created_at"])
     epoch_seconds = int(dt_obj.timestamp())
     embed = {
-    'description': f"`{data['data']['created_by']}` used command `/timeout {msgArgs}` at your local time of: <t:{epoch_seconds}>",
-    'color': generate_hex_code(),
+        "description": f"`{data['data']['created_by']}` used command `/timeout {msgArgs}` at your local time of: <t:{epoch_seconds}>\n\n[View usercard for {data['data']['args'][0]}](https://twitch.tv/popout/lvndmark/viewercard/{data['data']['args'][0]})",
+        "color": generate_hex_code(),
     }
-    payload = {
-        'embeds': [embed]
-    }
-    headers = {
-        "Content-Type": "application/json"
-    }
+    payload = {"embeds": [embed]}
+    headers = {"Content-Type": "application/json"}
     response = requests.post(webhook_url, data=json.dumps(payload), headers=headers)
     response.raise_for_status()
+
+
 def ban_message(data, webhook_url):
     msgArgs = data["data"]["args"][0] + " " + data["data"]["args"][1]
     dt_obj = parser.parse(data["data"]["created_at"])
     epoch_seconds = int(dt_obj.timestamp())
     embed = {
-    'description': f"`{data['data']['created_by']}` used command `/ban {msgArgs}` at your local time of: <t:{epoch_seconds}>",
-    'color': generate_hex_code(),
+        "description": f"`{data['data']['created_by']}` used command `/ban {msgArgs}` at your local time of: <t:{epoch_seconds}>\n\n[View usercard for {data['data']['args'][0]}](https://twitch.tv/popout/lvndmark/viewercard/{data['data']['args'][0]})",
+        "color": generate_hex_code(),
     }
-    payload = {
-        'embeds': [embed]
-    }    
-    headers = {
-        "Content-Type": "application/json"
-    }
+    payload = {"embeds": [embed]}
+    headers = {"Content-Type": "application/json"}
     response = requests.post(webhook_url, data=json.dumps(payload), headers=headers)
     response.raise_for_status()
+
+
 def unban_message(data, webhook_url):
     msgArgs = data["data"]["args"][0]
     dt_obj = parser.parse(data["data"]["created_at"])
     epoch_seconds = int(dt_obj.timestamp())
     embed = {
-    'description': f"`{data['data']['created_by']}` used command `/unban {msgArgs}` at your local time of: <t:{epoch_seconds}>",
-    'color': generate_hex_code(),
+        "description": f"`{data['data']['created_by']}` used command `/unban {msgArgs}` at your local time of: <t:{epoch_seconds}>",
+        "color": generate_hex_code(),
     }
-    payload = {
-        'embeds': [embed]
-    }    
-    headers = {
-        "Content-Type": "application/json"
-    }
+    payload = {"embeds": [embed]}
+    headers = {"Content-Type": "application/json"}
     response = requests.post(webhook_url, data=json.dumps(payload), headers=headers)
     response.raise_for_status()
+
+
 def untimeout_message(data, webhook_url):
     msgArgs = data["data"]["args"][0]
     dt_obj = parser.parse(data["data"]["created_at"])
     epoch_seconds = int(dt_obj.timestamp())
     embed = {
-    'description': f"`{data['data']['created_by']}` used command `/untimeout {msgArgs}` at your local time of: <t:{epoch_seconds}>",
-    'color': generate_hex_code(),
+        "description": f"`{data['data']['created_by']}` used command `/untimeout {msgArgs}` at your local time of: <t:{epoch_seconds}>",
+        "color": generate_hex_code(),
     }
-    payload = {
-        'embeds': [embed]
-    }    
-    headers = {
-        "Content-Type": "application/json"
-    }
+    payload = {"embeds": [embed]}
+    headers = {"Content-Type": "application/json"}
     response = requests.post(webhook_url, data=json.dumps(payload), headers=headers)
     response.raise_for_status()
+
+
 def enable_slowmode(data, webhook_url):
     embed = {
-    'description': f"`{data['data']['created_by']}` used command `/slow {data['data']['args'][0]}` at your local time of: <t:{int(time.time())}>",
-    'color': generate_hex_code(),
+        "description": f"`{data['data']['created_by']}` used command `/slow {data['data']['args'][0]}` at your local time of: <t:{int(time.time())}>",
+        "color": generate_hex_code(),
     }
-    payload = {
-        'embeds': [embed]
-    }
-    headers = {
-        "Content-Type": "application/json"
-    }
+    payload = {"embeds": [embed]}
+    headers = {"Content-Type": "application/json"}
     response = requests.post(webhook_url, data=json.dumps(payload), headers=headers)
     response.raise_for_status()
+
+
 def enable_emotemode(data, webhook_url):
     embed = {
-    'description': f"`{data['data']['created_by']}` used command `/emoteonly` at your local time of: <t:{int(time.time())}>",
-    'color': generate_hex_code(),
+        "description": f"`{data['data']['created_by']}` used command `/emoteonly` at your local time of: <t:{int(time.time())}>",
+        "color": generate_hex_code(),
     }
     print(embed)
-    payload = {
-        'embeds': [embed]
-    }    
-    headers = {
-        "Content-Type": "application/json"
-    }
+    payload = {"embeds": [embed]}
+    headers = {"Content-Type": "application/json"}
     response = requests.post(webhook_url, data=json.dumps(payload), headers=headers)
     response.raise_for_status()
+
+
 def enable_submode(data, webhook_url):
     embed = {
-    'description': f"`{data['data']['created_by']}` used command `/subscribers` at your local time of: <t:{int(time.time())}>",
-    'color': generate_hex_code(),
+        "description": f"`{data['data']['created_by']}` used command `/subscribers` at your local time of: <t:{int(time.time())}>",
+        "color": generate_hex_code(),
     }
-    payload = {
-        'embeds': [embed]
-    }      
-    headers = {
-        "Content-Type": "application/json"
-    }
+    payload = {"embeds": [embed]}
+    headers = {"Content-Type": "application/json"}
     response = requests.post(webhook_url, data=json.dumps(payload), headers=headers)
     response.raise_for_status()
+
+
 def enable_followmode(data, webhook_url):
     embed = {
-    'description': f"`{data['data']['created_by']}` used command `/followers {data['data']['args'][0]}` at your local time of: <t:{int(time.time())}>",
-    'color': generate_hex_code(),
+        "description": f"`{data['data']['created_by']}` used command `/followers {data['data']['args'][0]}` at your local time of: <t:{int(time.time())}>",
+        "color": generate_hex_code(),
     }
-    payload = {
-        'embeds': [embed]
-    }      
-    headers = {
-        "Content-Type": "application/json"
-    }
+    payload = {"embeds": [embed]}
+    headers = {"Content-Type": "application/json"}
     response = requests.post(webhook_url, data=json.dumps(payload), headers=headers)
     response.raise_for_status()
+
+
 def enable_r9k(data, webhook_url):
     embed = {
-    'description': f"`{data['data']['created_by']}` used command `/r9kbeta` at your local time of: <t:{int(time.time())}>",
-    'color': generate_hex_code(),
+        "description": f"`{data['data']['created_by']}` used command `/r9kbeta` at your local time of: <t:{int(time.time())}>",
+        "color": generate_hex_code(),
     }
-    payload = {
-        'embeds': [embed]
-    }      
-    headers = {
-        "Content-Type": "application/json"
-    }
+    payload = {"embeds": [embed]}
+    headers = {"Content-Type": "application/json"}
     response = requests.post(webhook_url, data=json.dumps(payload), headers=headers)
     response.raise_for_status()
+
+
 def disable_slowmode(data, webhook_url):
     embed = {
-    'description': f"`{data['data']['created_by']}` used command `/slowoff` at your local time of: <t:{int(time.time())}>",
-    'color': generate_hex_code(),
+        "description": f"`{data['data']['created_by']}` used command `/slowoff` at your local time of: <t:{int(time.time())}>",
+        "color": generate_hex_code(),
     }
-    payload = {
-        'embeds': [embed]
-    }      
-    headers = {
-        "Content-Type": "application/json"
-    }
+    payload = {"embeds": [embed]}
+    headers = {"Content-Type": "application/json"}
     response = requests.post(webhook_url, data=json.dumps(payload), headers=headers)
     response.raise_for_status()
+
+
 def disable_emotemode(data, webhook_url):
     embed = {
-    'description': f"`{data['data']['created_by']}` used command `/emoteonlyoff` at your local time of: <t:{int(time.time())}>",
-    'color': generate_hex_code(),
+        "description": f"`{data['data']['created_by']}` used command `/emoteonlyoff` at your local time of: <t:{int(time.time())}>",
+        "color": generate_hex_code(),
     }
-    payload = {
-        'embeds': [embed]
-    }      
-    headers = {
-        "Content-Type": "application/json"
-    }
+    payload = {"embeds": [embed]}
+    headers = {"Content-Type": "application/json"}
     response = requests.post(webhook_url, data=json.dumps(payload), headers=headers)
     response.raise_for_status()
+
+
 def disable_submode(data, webhook_url):
     embed = {
-    'description': f"`{data['data']['created_by']}` used command `/subscribersoff` at your local time of: <t:{int(time.time())}>",
-    'color': generate_hex_code(),
+        "description": f"`{data['data']['created_by']}` used command `/subscribersoff` at your local time of: <t:{int(time.time())}>",
+        "color": generate_hex_code(),
     }
-    payload = {
-        'embeds': [embed]
-    }      
-    headers = {
-        "Content-Type": "application/json"
-    }
+    payload = {"embeds": [embed]}
+    headers = {"Content-Type": "application/json"}
     response = requests.post(webhook_url, data=json.dumps(payload), headers=headers)
     response.raise_for_status()
+
+
 def disable_followmode(data, webhook_url):
     embed = {
-    'description': f"`{data['data']['created_by']}` used command `/followersoff` at your local time of: <t:{int(time.time())}>",
-    'color': generate_hex_code(),
+        "description": f"`{data['data']['created_by']}` used command `/followersoff` at your local time of: <t:{int(time.time())}>",
+        "color": generate_hex_code(),
     }
-    payload = {
-        'embeds': [embed]
-    }     
-    headers = {
-        "Content-Type": "application/json"
-    }
+    payload = {"embeds": [embed]}
+    headers = {"Content-Type": "application/json"}
     response = requests.post(webhook_url, data=json.dumps(payload), headers=headers)
-    response.raise_for_status()        
+    response.raise_for_status()
+
+
 def disable_r9k(data, webhook_url):
     embed = {
-    'description': f"`{data['data']['created_by']}` used command `/r9kbetaoff` at your local time of: <t:{int(time.time())}>",
-    'color': generate_hex_code(),
+        "description": f"`{data['data']['created_by']}` used command `/r9kbetaoff` at your local time of: <t:{int(time.time())}>",
+        "color": generate_hex_code(),
     }
-    payload = {
-        'embeds': [embed]
-    }     
-    headers = {
-        "Content-Type": "application/json"
-    }
+    payload = {"embeds": [embed]}
+    headers = {"Content-Type": "application/json"}
     response = requests.post(webhook_url, data=json.dumps(payload), headers=headers)
     response.raise_for_status()
 
